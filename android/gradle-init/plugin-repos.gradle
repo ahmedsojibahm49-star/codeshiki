@@ -1,0 +1,37 @@
+// Gradle init script: resolve plugin dependencies from Maven Central directly.
+//
+// WHY THIS EXISTS (Nov 2026): Flutter's Android build includes the
+// `flutter_tools/gradle` build (see android/settings.gradle.kts
+// `includeBuild`). That included build has NO pluginManagement block of its
+// own, so Gradle resolves ITS plugin dependencies ONLY from the Gradle
+// Plugin Portal (the default). The portal does not host Kotlin artifacts
+// itself — it 303-redirects them to Maven Central. When that redirect hop
+// fails (as it did in the 2026-11-19 GitHub Actions run), the build dies
+// with:
+//
+//   Could not find org.jetbrains.kotlin:kotlin-stdlib:2.3.20.
+//     Searched in: https://plugins.gradle.org/m2/...
+//
+// even though the artifact exists on Maven Central. Adding mavenCentral()
+// to every build's pluginManagement repositories (this script runs for the
+// main build AND every included build via settingsEvaluated) removes the
+// fragile redirect hop: Kotlin artifacts come straight from Central.
+//
+// INSTALL: copy this file to ~/.gradle/init.d/ (Gradle applies every
+// *.gradle / *.gradle.kts file there automatically). The GitHub Actions
+// workflow does this in its "Install Gradle plugin-repo init script" step.
+// For local builds: mkdir -p ~/.gradle/init.d && cp
+// android/gradle-init/plugin-repos.gradle ~/.gradle/init.d/
+//
+// This only ADDS repositories — it cannot remove or break anything the
+// project already declares. Worst case (if a future Gradle ever stops
+// firing settingsEvaluated for included builds) it is simply a no-op.
+
+settingsEvaluated { settings ->
+    settings.pluginManagement {
+        repositories {
+            mavenCentral()
+            gradlePluginPortal()
+        }
+    }
+}
