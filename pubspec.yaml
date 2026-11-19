@@ -1,0 +1,115 @@
+name: codeshikhi
+description: "CodeShikhi — learn programming in Bangla. Demo app (local data only)."
+publish_to: 'none'
+version: 0.1.0+1
+
+environment:
+  sdk: ^3.14.0
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+  # Flutter 3.50 moved Material widgets out of the SDK: `flutter/material.dart`
+  # is deprecated — use package:material_ui (same API, incl.
+  # GlobalMaterialLocalizations / GlobalCupertinoLocalizations).
+  material_ui: ^1.11.0
+
+  # State + routing
+  flutter_riverpod: ^3.5.0
+  go_router: ^18.1.4
+
+  # Local storage (plain Map<String, dynamic> in Hive — no codegen, no adapters)
+  hive: ^2.2.3
+  hive_flutter: ^1.1.0
+
+  # Media + network
+  video_player: ^2.14.1
+  http: ^1.6.0
+
+  # Icons — official Iconsax (Linear base names, Bold `_copy` variants)
+  iconsax_flutter: ^1.0.1
+
+  # i18n (hand-rolled maps in lib/i18n; intl only for date formatting)
+  intl: ^0.20.3
+
+  # Platform + files
+  path_provider: ^2.1.6
+  share_plus: ^13.3.1
+  url_launcher: ^6.3.3
+  cupertino_icons: ^1.0.8
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+  flutter_launcher_icons: ^0.14.4
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/badges/
+    - assets/photos/
+    - assets/icon/icon.png
+
+  fonts:
+    # Bricolage Grotesque variable (opsz, wdth, wght) — display font.
+    # Registered once per weight; Flutter picks the matching wght instance.
+    - family: BricolageGrotesque
+      fonts:
+        - asset: assets/fonts/BricolageGrotesque-Variable.ttf
+          weight: 400
+        - asset: assets/fonts/BricolageGrotesque-Variable.ttf
+          weight: 500
+        - asset: assets/fonts/BricolageGrotesque-Variable.ttf
+          weight: 600
+        - asset: assets/fonts/BricolageGrotesque-Variable.ttf
+          weight: 700
+        - asset: assets/fonts/BricolageGrotesque-Variable.ttf
+          weight: 800
+    # Geist — UI font (static weights from the geist npm package).
+    - family: Geist
+      fonts:
+        - asset: assets/fonts/Geist-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/Geist-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/Geist-SemiBold.ttf
+          weight: 600
+        - asset: assets/fonts/Geist-Bold.ttf
+          weight: 700
+    # JetBrains Mono variable — code font.
+    - family: JetBrainsMono
+      fonts:
+        - asset: assets/fonts/JetBrainsMono-Variable.ttf
+          weight: 400
+        - asset: assets/fonts/JetBrainsMono-Variable.ttf
+          weight: 500
+        - asset: assets/fonts/JetBrainsMono-Variable.ttf
+          weight: 600
+        - asset: assets/fonts/JetBrainsMono-Variable.ttf
+          weight: 700
+    # Anek Bangla variable (wdth, wght) — Bangla font, used when locale is bn.
+    - family: AnekBangla
+      fonts:
+        - asset: assets/fonts/AnekBangla-Variable.ttf
+          weight: 400
+        - asset: assets/fonts/AnekBangla-Variable.ttf
+          weight: 500
+        - asset: assets/fonts/AnekBangla-Variable.ttf
+          weight: 600
+        - asset: assets/fonts/AnekBangla-Variable.ttf
+          weight: 700
+
+flutter_launcher_icons:
+  android: true
+  ios: true
+  image_path: "assets/icon/icon.png"
+  adaptive_icon_background: "#F97316"
+  adaptive_icon_foreground: "assets/icon/icon.png"
+  min_sdk_android: 21
+  # iOS App Store rejects icons with an alpha channel (our rounded square
+  # has transparent corners); flatten alpha on iOS only.
+  remove_alpha_ios: true
